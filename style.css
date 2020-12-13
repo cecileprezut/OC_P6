@@ -1,0 +1,122 @@
+body {
+  margin: 20px;
+  font-size: medium;
+}
+
+/***********************************************************
+*             whole screen, main title excluded
+***********************************************************/
+#board {
+  margin-top: 30px;
+  display: flex;
+  max-width: 100%;
+  justify-content: space-between;
+}
+
+/***********************************************************
+*                            map
+***********************************************************/
+td {
+  border: 1px solid #3297a8;
+  height: 55px;
+  width: 55px;
+}
+
+.cookie {
+  background-image: url("assets/cookie.png");
+  background-repeat: no-repeat; 
+  background-size: 100%;
+}
+
+.rainbow {
+  background-image: url("assets/rainbow.png");
+  background-repeat: no-repeat; 
+  background-size: 100%;
+}
+
+.teddyBear {
+  background-image: url("assets/teddy_bear.png");
+  background-repeat: no-repeat; 
+  background-size: 100%;
+}
+
+.flower {
+  background-image: url("assets/flower.png");
+  background-repeat: no-repeat; 
+  background-size: 100%;
+}
+
+.player1 {
+  background-image: url("assets/player1.png");
+  background-repeat: no-repeat; 
+  background-size: 100%;
+}
+
+.player2 {
+  background-image: url("assets/player2.png");
+  background-repeat: no-repeat; 
+  background-size: 100%;
+}
+
+.block {
+  background-image: url("assets/crib.png");
+  background-repeat: no-repeat; 
+  background-size: 100%;
+}
+
+/***********************************************************
+*                      players' panels
+***********************************************************/
+#leftDiv,
+#rightDiv {
+  width: 18%;
+  border: black 1px solid;
+  padding: 10px;
+}
+
+.playerName {
+  float: left;
+  font-size: x-large;
+  margin-top: 1em;
+}
+
+.avatar {
+  float: right;
+}
+
+.currentWeapon {
+  float: left;
+  line-height: 2em;
+}
+.currentWeaponVisual {
+  height: 30px;
+  margin-left: 10px;
+}
+
+.noFloat {
+  clear: both;
+}
+
+progress {
+  width: 100%;
+}
+
+.hidden {
+  display: none;
+}
+
+.inactive {
+  color: grey;
+}
+
+.warning {
+  color: red;
+  font-size: small;
+}
+
+#player1Shield,
+#player2Shield,
+#player1EndTurn,
+#player2EndTurn {
+  margin-bottom: 1em;
+}
