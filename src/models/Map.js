@@ -1,4 +1,4 @@
-const SIZE = 8;
+const SIZE = 12;
 
 const DEFAULT_WEAPON = new Weapon("Flower", 10, "../assets/flower.png");
 
@@ -8,12 +8,15 @@ const WEAPONS = [
   new Weapon("Teddy Bear", 40, "../assets/teddy_bear.png"),
 ];
 
+/**
+ * Generates the map (array of objects) according to SIZE
+ */
 class Map {
   constructor() {
     this.cells = [];
 
     if (SIZE % 4 !== 0 || (SIZE <= 4 && SIZE % 4 === 0)) {
-      alert("SIZE doit être divisible par 4 et > 4");
+      alert("SIZE must be divisible by 4 and greater than 4.");
       return;
     }
 
@@ -23,7 +26,7 @@ class Map {
       }
     }
 
-    // On découpe en partie de 2 * 2 et on en prend une qu'on met a access false
+    // The map is cut is 2*2 cell packs. For each pack, one or zero random cell gets a block.
     for (let x = 0; x < SIZE; x += 2) {
       for (let y = 0; y < SIZE; y += 2) {
         const pack = this.cells.filter((cell) => {
@@ -48,7 +51,8 @@ class Map {
       }
     }
 
-    // On ajoute 1 arme par paquet de 9 cells
+    // The map is cut is 3*3 cell packs. For each pack, one random cell gets a weapon, chosen randomly in the WEAPONS array. 
+    // If the cell already has a block or a player, the weapon is not added.
     for (let x = 0; x < SIZE; x += 3) {
       for (let y = 0; y < SIZE; y += 3) {
         const pack = this.cells.filter((cell) => {
@@ -74,7 +78,6 @@ class Map {
             cell.y === cellToAddWeapon.y &&
             cell.block === false
           ) {
-            // Chercher une arme random
             const weapon = WEAPONS[getRandomIndex(WEAPONS.length)];
             this.cells[index].addWeapon(weapon);
           }
@@ -82,12 +85,16 @@ class Map {
       }
     }
   }
-
+  /**
+   * Randomly sets each player in a pack of cell which size depends on SIZE
+   * @param {string} player1Name
+   * @param {string} player2Name
+   */
   setPlayers(player1Name, player2Name) {
     const player1 = new Player(player1Name, 100, 0, 0, DEFAULT_WEAPON);
     const player2 = new Player(player2Name, 100, 0, 0, DEFAULT_WEAPON);
 
-    // 0 <= Player 1.x < SIZE/4 && 0 <= Player 1.y < SIZE/4
+    // Pack of cell to add player 1: 0 <= Player 1.x < SIZE/4 && 0 <= Player 1.y < SIZE/4
     let cellsForPlayer = this.cells.filter((cell) => {
       return (
         cell.x >= 0 &&
@@ -108,7 +115,7 @@ class Map {
       }
     });
 
-    // SIZE - SIZE/4 <= Player2.x < SIZE && SIZE - SIZE/4 <= Player2.y < SIZE
+    // Pack of cell to add player 2: SIZE - SIZE/4 <= Player2.x < SIZE && SIZE - SIZE/4 <= Player2.y < SIZE
     cellsForPlayer = this.cells.filter((cell) => {
       return (
         cell.x >= SIZE - SIZE / 4 &&
@@ -130,6 +137,9 @@ class Map {
     });
   }
 
+  /**
+   * Retrieves the cells with players
+   */
   getPlayers() {
     const cellsWithPlayers = this.cells.filter((cell) => {
       return cell.player !== null;
@@ -139,8 +149,14 @@ class Map {
     });
   }
 
+
+  /**
+   * 
+   * @param {(string|number)} x x coordinate of the td clicked
+   * @param {(string|number)} y y coordinate of the td clicked
+   */
   getCell(x, y) {
-    // Le HTML nous envoie des string
+    // The HTML sends strings
     const intX = parseInt(x);
     const intY = parseInt(y);
 
@@ -149,7 +165,13 @@ class Map {
     });
   }
 
-  // return true si déplacé sinon retourne false
+  /**
+   * 
+   * @param {Object} currentPlayer 
+   * @param {(string|number)} x x coordinate of the td clicked
+   * @param {(string|number)} y y coordinate of the td clicked
+   * @returns true is the player has moved, otherwise returns false
+   */
   movePlayer(currentPlayer, x, y) {
     const targetCell = this.getCell(x, y);
 
@@ -157,16 +179,16 @@ class Map {
       return false;
     }
 
-    // Pas vertical ou horizontal
+    // The move is neither vertical nor horizontal
     if (currentPlayer.x !== targetCell.x && currentPlayer.y !== targetCell.y) {
       return false;
     }
-    // Même case que le joueur
+    // If the currentPlayer is on the cell
     if (currentPlayer.x === targetCell.x && currentPlayer.y === targetCell.y) {
       return false;
     }
 
-    // Horizontal droite
+    // Horizontal to the right
     if (currentPlayer.y === targetCell.y && currentPlayer.x < targetCell.x) {
       const distance = Math.abs(targetCell.x - currentPlayer.x);
 
@@ -197,7 +219,7 @@ class Map {
       return true;
     }
 
-    // Horizontal gauche
+    // Horizontal to the left
     if (currentPlayer.y === targetCell.y && currentPlayer.x > targetCell.x) {
       const distance = Math.abs(targetCell.x - currentPlayer.x);
       for (let i = 1; i <= distance; i++) {
@@ -226,7 +248,7 @@ class Map {
       return true;
     }
 
-    // Vertical haut
+    // Vertical to the top
     if (currentPlayer.y > targetCell.y && currentPlayer.x === targetCell.x) {
       const distance = Math.abs(targetCell.y - currentPlayer.y);
       for (let i = 1; i <= distance; i++) {
@@ -255,7 +277,7 @@ class Map {
       return true;
     }
 
-    // Vertical bas
+    // Vertical to the bottom
     if (currentPlayer.y < targetCell.y && currentPlayer.x === targetCell.x) {
       const distance = Math.abs(targetCell.y - currentPlayer.y);
       for (let i = 1; i <= distance; i++) {
@@ -285,6 +307,11 @@ class Map {
     }
   }
 
+  /**
+   * 
+   * @param {Object} currentPlayer 
+   * @returns true if a cell next to the currentPlayer has a player
+   */
   hasAdjacentPlayer(currentPlayer) {
     const cellsAroundPlayer = this.cells.filter((cell) => {
       return (

@@ -1,28 +1,27 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Fight !</title>
+    <title>Fight!</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
-      crossorigin="anonymous"
-    />
+
+    <!-- Bootstrap library -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous" />
+
+    <!-- Project CSS -->
     <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
 
-    <script
-      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-      integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs="
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
-      crossorigin="anonymous"
-    ></script>
+    <!-- Scripts for JQuery and Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+        crossorigin="anonymous"></script>
+
+    <!-- Project scripts -->
     <script src="src/display-elements.js"></script>
     <script src="src/helpers.js"></script>
     <script src="src/display.js"></script>
@@ -31,174 +30,117 @@
     <script src="src/models/Game.js"></script>
     <script src="src/models/Map.js"></script>
     <script src="src/models/Player.js"></script>
-
     <script src="index.js"></script>
-  </head>
+</head>
 
-  <body>
+<body>
     <h1>Toddlers' battle</h1>
     <div id="board">
-      <div id="leftDiv">
-        <!--player id-->
-        <h2 class="playerName" id="player1Name"></h2>
-        <img src="assets/player1.png" alt="Player 1" class="avatar" />
+        <!-- Player 1's panel -->
+        <div id="leftDiv">
+            <!-- Player's ID -->
+            <h2 class="playerName" id="player1Name"></h2>
+            <img src="assets/player1.png" alt="Player 1" class="avatar" />
 
-        <!--life bar-->
-        <p class="noFloat">Life: <span id="player1LifeScore"></span>/100</p>
-        <div class="progress">
-          <div
-            id="player1ProgressBar"
-            class="progress-bar"
-            role="progressbar"
-            style="width: 100%"
-            aria-valuenow="100"
-            aria-valuemin="0"
-            aria-valuemax="100"
-          ></div>
+            <!-- Life bar -->
+            <p class="noFloat">Life: <span id="player1LifeScore"></span>/100</p>
+            <div class="progress">
+                <div id="player1ProgressBar" class="progress-bar" role="progressbar" style="width: 100%"
+                    aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+
+            <!-- Weapon -->
+            <p class="currentWeapon">Weapon: <span id="player1Weapon"></span></p>
+            <img src="assets/flower.png" alt="Flower weapon" class="currentWeaponVisual" id="player1WeaponVisual" />
+            <p class="noFloat">
+                Weapon damage: <span id="player1WeaponDamage"></span>
+            </p>
+
+            <!-- Number of moves count -->
+            <p id="player1NumberOfMovesParagraph" class="hidden">
+                Number of moves done in this turn:
+                <span id="player1NumberOfMoves"></span>/3
+            </p>
+            <button id="player1EndTurn" class="hidden">End of turn</button>
+
+            <!-- Shield -->
+            <div id="player1Shield"></div>
+
+            <!-- Fight and Defend yourself buttons -->
+            <button id="player1FightBtn" class="hidden">Fight</button>
+            <button id="player1DefendBtn" class="hidden"
+                title="Defend yourself to suffer only the half of your enemy's damage">
+                Defend yourself
+            </button>
         </div>
 
-        <!--weapon-->
-        <p class="currentWeapon">Weapon: <span id="player1Weapon"></span></p>
-        <img
-          src="assets/flower.png"
-          alt="Flower weapon"
-          class="currentWeaponVisual"
-          id="player1WeaponVisual"
-        />
-        <p class="noFloat">
-          Weapon damage: <span id="player1WeaponDamage"></span>
-        </p>
+        <div id="map"></div>
 
-        <!--number of moves count-->
-        <p id="player1NumberOfMovesParagraph" class="hidden">
-          Number of moves done in this turn:
-          <span id="player1NumberOfMoves"></span>/3
-        </p>
-        <button id="player1EndTurn" class="hidden">End of turn</button>
+        <!-- Player 2's panel -->
+        <div id="rightDiv">
+            <!-- Player's ID -->
+            <h2 class="playerName" id="player2Name"></h2>
+            <img src="assets/player2.png" alt="Player 2" class="avatar" />
 
-        <!--messages d'erreur -->
-        <p id="player1EndOfTurnWarning" class="warning hidden">
-          You've reached the maximum number of moves. End your turn now.
-        </p>
-        <p id="player1MovingMandatory" class="warning hidden">
-          Moving is mandatory!
-        </p>
-        <p id="player1OneDirection" class="warning hidden">
-          You can only move in one direction!
-        </p>
+            <!-- Life bar -->
+            <p class="noFloat">Life: <span id="player2LifeScore"></span>/100</p>
+            <div class="progress">
+                <div id="player2ProgressBar" class="progress-bar" role="progressbar" style="width: 100%"
+                    aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
 
-        <!--shield-->
-        <div id="player1Shield"></div>
+            <!-- Weapon -->
+            <p class="currentWeapon">Weapon: <span id="player2Weapon"></span></p>
+            <img src="assets/flower.png" alt="Flower weapo" class="currentWeaponVisual" id="player2WeaponVisual" />
+            <p class="noFloat">
+                Weapon damage: <span id="player2WeaponDamage"></span>
+            </p>
 
-        <!--buttons-->
-        <button id="player1FightBtn" class="hidden">Fight</button>
-        <button
-          id="player1DefendBtn"
-          class="hidden"
-          title="Defend yourself to suffer only the half of your enemy's damage"
-        >
-          Defend yourself
-        </button>
-      </div>
-      <div id="map"></div>
-      <div id="rightDiv">
-        <!--player id-->
-        <h2 class="playerName" id="player2Name"></h2>
-        <img src="assets/player2.png" alt="Player 2" class="avatar" />
+            <!-- Number of moves count -->
+            <p id="player2NumberOfMovesParagraph" class="hidden">
+                Number of moves done in this turn:
+                <span id="player2NumberOfMoves"></span>/3
+            </p>
+            <button id="player2EndTurn" class="hidden">End of turn</button>
 
-        <!--life bar-->
-        <p class="noFloat">Life: <span id="player2LifeScore"></span>/100</p>
-        <div class="progress">
-          <div
-            id="player2ProgressBar"
-            class="progress-bar"
-            role="progressbar"
-            style="width: 100%"
-            aria-valuenow="100"
-            aria-valuemin="0"
-            aria-valuemax="100"
-          ></div>
+            <!-- Shield -->
+            <div id="player2Shield"></div>
+
+            <!-- Fight and Defend yourself buttons -->
+            <button id="player2FightBtn" class="hidden">Fight</button>
+            <button id="player2DefendBtn" class="hidden"
+                title="Defend yourself to suffer only the half of your enemy's damage">
+                Defend yourself
+            </button>
         </div>
-
-        <!--weapon-->
-        <p class="currentWeapon">Weapon: <span id="player2Weapon"></span></p>
-        <img
-          src="assets/flower.png"
-          alt="Flower weapo"
-          class="currentWeaponVisual"
-          id="player2WeaponVisual"
-        />
-        <p class="noFloat">
-          Weapon damage: <span id="player2WeaponDamage"></span>
-        </p>
-
-        <!--number of moves count-->
-        <p id="player2NumberOfMovesParagraph" class="hidden">
-          Number of moves done in this turn:
-          <span id="player2NumberOfMoves"></span>/3
-        </p>
-        <button id="player2EndTurn" class="hidden">End of turn</button>
-
-        <!--messages d'erreur -->
-        <p id="player2EndOfTurnWarning" class="warning hidden">
-          You've reached the maximum number of moves. End your turn now.
-        </p>
-        <p id="player2MovingMandatory" class="warning hidden">
-          Moving is mandatory!
-        </p>
-        <p id="player2OneDirection" class="warning hidden">
-          You can only move in one direction!
-        </p>
-
-        <!--shield-->
-        <div id="player2Shield"></div>
-
-        <!--buttons-->
-        <button id="player2FightBtn" class="hidden">Fight</button>
-        <button
-          id="player2DefendBtn"
-          class="hidden"
-          title="Defend yourself to suffer only the half of your enemy's damage"
-        >
-          Defend yourself
-        </button>
-      </div>
     </div>
 
+    <!-- End-of-game modal -->
     <div class="modal" id="modal" tabindex="-1" role="dialog">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">End of game</h5>
-            <button
-              type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
-              ,
-              onclick="$('#modal').modal('hide');"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <p><span id="winnerName"></span> won!</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" id="startNewGameBtn">
-              Start a new game
-            </button>
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-dismiss="modal"
-              onclick="$('#modal').modal('hide');"
-            >
-              Close
-            </button>
-          </div>
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">End of game</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        onclick="$('#modal').modal('hide');">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p><span id="winnerName"></span> won!</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="startNewGameBtn">
+                        Start a new game
+                    </button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                        onclick="$('#modal').modal('hide');">
+                        Close
+                    </button>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </body>
+</body>
+
 </html>

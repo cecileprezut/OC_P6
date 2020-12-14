@@ -1,3 +1,6 @@
+/**
+ * Cell class taking coordinates, and whether it has a block on it or not, as properties.
+ */
 class Cell {
   constructor(x, y, block = false) {
     this.x = x;
@@ -6,13 +9,21 @@ class Cell {
     this.weapon = null;
     this.player = null;
   }
-
-  addWeapon(weapon){
+  /**
+   * 
+   * @param {string} weapon 
+   */
+  addWeapon(weapon) {
     this.weapon = weapon
   }
 
-  addPlayer(player,oldCell = null) {
-    // Si le player a une arme on échange
+  /**
+   * 
+   * @param {Object} player 
+   * @param {*} oldCell is the cell on which the player previously was
+   */
+  addPlayer(player, oldCell = null) {
+    // If the cell has a weapon, cell weapon and player's weapon are exchanged
     if (player.weapon && this.weapon) {
       let weaponToDrop = player.weapon;
       player.weapon = this.weapon;
@@ -23,26 +34,33 @@ class Cell {
     player.y = this.y;
     this.player = player;
 
-    if(oldCell){
-        oldCell.player = null
+    if (oldCell) {
+      oldCell.player = null
     }
   }
-
+  /**
+   * 
+   * @param {Object} player
+   */
   playerCanMoveTo(player) {
-    // Si le joueur est déjà dans la case
+    // If the currentPlayer is on the cell
     if (player.x === this.x && player.y === this.y) {
       return false;
     }
+    // If there is a block or another player on the cell
     if (this.block || this.player) {
       return false;
     }
     return true;
   }
 
-  setBlocked(){
-      this.weapon = null
-      this.player = null
-      this.block = true
+  /**
+   * allows to add a block to a cell
+   */
+  setBlocked() {
+    this.weapon = null
+    this.player = null
+    this.block = true
   }
 
 }

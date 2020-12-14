@@ -1,3 +1,8 @@
+/**
+ * Displays the map and the basic players' panels (buttons and shield excluded)
+ * @param {Object} game
+ * @param {Object} elements all DOM elements resulting from loadElements();
+ */
 function display(game, elements) {
   elements.mapElt.innerHTML = "";
 
@@ -25,7 +30,7 @@ function display(game, elements) {
   for (let i = 0; i < game.map.cells.length; i++) {
     game.map.cells.forEach((cell) => {
       switch (cell.player) {
-        // pour chaque cellule avec un player, trouver la td qui a le meme x et le meme y, puis lui ajouter la classe du player
+        // For each cell with a player, retrieves the td with the same coordinates and adds the player class to it
         case game.players[0]:
           const tdEltWithPlayer1 = document.querySelector(
             "[x=" + CSS.escape(cell.x) + "][y=" + CSS.escape(cell.y) + "]"
@@ -42,7 +47,7 @@ function display(game, elements) {
 
       if (cell.weapon) {
         switch (cell.weapon.name) {
-          // pour chaque cellule avec une weapon, trouver la td qui a le meme x et le meme y, puis lui ajouter la classe de la weapon
+          // For each cell with a weapon, retrieves the td with the same coordinates and adds the weapon class to it
           case "Cookie":
             const tdEltWithCookie = document.querySelector(
               "[x=" + CSS.escape(cell.x) + "][y=" + CSS.escape(cell.y) + "]"
@@ -71,7 +76,7 @@ function display(game, elements) {
       }
 
       if (cell.block) {
-        // pour chaque cellule avec access false, trouver la td qui a le meme x et le meme y, puis lui ajouter la classe block
+        // For each cell with a block, retrieves the td with the same coordinates and adds the block class to it
         const tdEltWithNoAccess = document.querySelector(
           "[x=" + CSS.escape(cell.x) + "][y=" + CSS.escape(cell.y) + "]"
         );
@@ -80,7 +85,7 @@ function display(game, elements) {
     });
   }
 
-  // affichage dans les panneaux des joueurs
+  // display of the players' panels
   elements.player1NameElt.innerHTML = game.players[0].name;
   elements.player2NameElt.innerHTML = game.players[1].name;
 
@@ -110,9 +115,14 @@ function display(game, elements) {
   elements.player1WeaponDamageElt.innerHTML = game.players[0].weapon.damage;
   elements.player2WeaponDamageElt.innerHTML = game.players[1].weapon.damage;
 
-  
+
 }
 
+/**
+ * 
+ * @param {number} currentIndex 0 or 1, to identify the turn and thus, the currentPlayer
+ * @param {Object} elements all DOM elements resulting from loadElements();
+ */
 function displayEndOfTurnButton(currentIndex, elements) {
   // Si current index === 0 -> player 1
   if (currentIndex === 0) {
@@ -122,17 +132,27 @@ function displayEndOfTurnButton(currentIndex, elements) {
   }
 }
 
+/**
+ * 
+ * @param {number} currentIndex 0 or 1, to identify the turn and thus, the currentPlayer
+ * @param {Object} elements all DOM elements resulting from loadElements();
+ */
 function hideEndOfTurnButton(currentIndex, elements) {
- 
-    // Si current index === 0 -> player 1
-    if (currentIndex === 1) {
-      elements.player1EndTurnElt.setAttribute("class", "hidden");
-    } else {
-      elements.player2EndTurnElt.setAttribute("class", "hidden");
-    }
- 
+
+  // Si current index === 0 -> player 1
+  if (currentIndex === 1) {
+    elements.player1EndTurnElt.setAttribute("class", "hidden");
+  } else {
+    elements.player2EndTurnElt.setAttribute("class", "hidden");
+  }
+
 }
 
+/**
+ * Displays Fight and Defend yourself buttons
+ * @param {number} currentIndex 0 or 1, to identify the turn and thus, the currentPlayer
+ * @param {Object} elements all DOM elements resulting from loadElements();
+ */
 function displayFightActionsButtons(currentIndex, elements) {
   //TODO:utiliser class
   if (currentIndex === 0) {
@@ -141,7 +161,7 @@ function displayFightActionsButtons(currentIndex, elements) {
     elements.player2ShieldElt.innerHTML = "";
   }
 
-  // Le current player est changé avant
+  // /!\ CurrentPlayer is changed beforehand
   if (currentIndex === 0) {
     elements.player1DefendBtnElt.removeAttribute("disabled", "");
     elements.player1DefendBtnElt.removeAttribute("class", "hidden");
@@ -163,17 +183,27 @@ function displayFightActionsButtons(currentIndex, elements) {
   }
 }
 
+/**
+ * Displays the shield
+ * @param {number} currentIndex 0 or 1, to identify the turn and thus, the currentPlayer
+ * @param {Object} elements all DOM elements resulting from loadElements();
+ */
 function displayShield(currentIndex, elements) {
-  //TODO:utiliser class
+  const shieldImg = document.createElement("IMG")
+  shieldImg.setAttribute('src', 'assets/shield.png')
+  shieldImg.setAttribute('width', '20')
+  shieldImg.setAttribute('alt', 'Shield')
   if (currentIndex === 0) {
-    elements.player1ShieldElt.innerHTML =
-      '<img src="assets/shield.png" width="20" alt="shield">';
+    elements.player1ShieldElt.appendChild(shieldImg);
   } else {
-    elements.player2ShieldElt.innerHTML =
-      '<img src="assets/shield.png" width="20" alt="shield">';
+    elements.player2ShieldElt.appendChild(shieldImg);
   }
 }
 
+/**
+ * 
+ * @param {Object} game 
+ */
 function refreshLifeBar(game) {
   $("#player1ProgressBar")
     .attr("aria-valuenow", game.players[0].life)
@@ -190,35 +220,53 @@ function refreshLifeBar(game) {
   }
 }
 
+/**
+ * Displays a modal offering to start a new game at the end of a game
+ * @param {Object} game 
+ * @param {Object} elements all DOM elements resulting from loadElements();
+ */
 function displayModal(game, elements) {
   elements.winnerNameElt.innerHTML = game.currentPlayer.name;
   $("#modal").modal("show");
 }
 
+/**
+ * Displays the number of moves done for the current turn
+ * @param {Object} game 
+ * @param {Object} elements all DOM elements resulting from loadElements();
+ */
 function displayNumberOfMovesCount(game, elements) {
-  if (game.currentIndex === 0){
+  if (game.currentIndex === 0) {
     elements.player1NumberOfMovesParagraphElt.removeAttribute('class', 'hidden')
     elements.player1NumberOfMovesSpan.innerHTML = game.keyboardInputCount
   } else {
     elements.player2NumberOfMovesParagraphElt.removeAttribute('class', 'hidden')
     elements.player2NumberOfMovesSpan.innerHTML = game.keyboardInputCount
   }
-  
+
 }
 
+/**
+ * 
+ * @param {Object} elements all DOM elements resulting from loadElements();
+ */
 function hideNumberOfMovesCount(elements) {
-    elements.player1NumberOfMovesParagraphElt.setAttribute('class', 'hidden')
-    elements.player2NumberOfMovesParagraphElt.setAttribute('class', 'hidden')
-  
+  elements.player1NumberOfMovesParagraphElt.setAttribute('class', 'hidden')
+  elements.player2NumberOfMovesParagraphElt.setAttribute('class', 'hidden')
+
 }
 
-function hightlightCurrentPlayerPanel (game, elements) {
-  // mise en avant du panneau du joueur dont c'est le tour
+/**
+ * 
+ * @param {Object} game 
+ * @param {Object} elements all DOM elements resulting from loadElements();
+ */
+function hightlightCurrentPlayerPanel(game, elements) {
   if (game.currentIndex === 0) {
     elements.leftDivElt.style.cssText = 'border: solid 3px #8CB74F'
     elements.rightDivElt.style.cssText = 'border: solid 1px black'
-} else {
+  } else {
     elements.leftDivElt.style.cssText = 'border: solid 1px black'
     elements.rightDivElt.style.cssText = 'border: solid 3px #8CB74F'
-}
+  }
 }

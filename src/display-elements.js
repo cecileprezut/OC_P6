@@ -1,3 +1,6 @@
+/**
+ * Allows to load all the DOM elements before calling the display functions
+ */
 function loadElements() {
   return {
     mapElt: document.getElementById("map"),
@@ -43,7 +46,7 @@ function loadElements() {
     ),
     player1EndOfTurnWarning: document.getElementById("player1EndOfTurnWarning"),
     player2EndOfTurnWarning: document.getElementById("player2EndOfTurnWarning"),
-    winnerNameElt : document.getElementById('winnerName'),
-    startNewGameBtnElt : document.getElementById('startNewGameBtn')
+    winnerNameElt: document.getElementById('winnerName'),
+    startNewGameBtnElt: document.getElementById('startNewGameBtn')
   };
 }
