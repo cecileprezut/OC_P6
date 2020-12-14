@@ -1,5 +1,8 @@
+/**
+ * Player class creates a player instance using the given properties. By default, defense is set to false. 
+ */
 class Player {
-    constructor(name,life, x,y,weapon){
+    constructor(name, life, x, y, weapon) {
         this.name = name
         this.x = x
         this.y = y
@@ -8,20 +11,31 @@ class Player {
         this.life = life
     }
 
-    fight(target,cb){
-        if(target.defense){
-            target.life -= this.weapon.damage /2
-        } else{
+    /**
+     * 
+     * @param {Player} target 
+     * @param {requestCallback} cb Allows to call display-related functions once the fight action is done
+     */
+    fight(target, cb) {
+        if (target.defense) {
+            target.life -= this.weapon.damage / 2
+        } else {
             target.life -= this.weapon.damage
         }
         cb()
     }
 
-    setDefense(){
+    /**
+     * Sets the player's property defense to true 
+     */
+    setDefense() {
         this.defense = true
     }
 
-    unsetDefense(){
+    /**
+     * Sets the player's property defense to false 
+     */
+    unsetDefense() {
         this.defense = false;
     }
 }

@@ -139,6 +139,7 @@ class Map {
 
   /**
    * Retrieves the cells with players
+   * @returns {Object[]} an array of the Players
    */
   getPlayers() {
     const cellsWithPlayers = this.cells.filter((cell) => {
@@ -154,6 +155,7 @@ class Map {
    * 
    * @param {(string|number)} x x coordinate of the td clicked
    * @param {(string|number)} y y coordinate of the td clicked
+   * @returns {Object} Cell
    */
   getCell(x, y) {
     // The HTML sends strings
@@ -170,7 +172,7 @@ class Map {
    * @param {Object} currentPlayer 
    * @param {(string|number)} x x coordinate of the td clicked
    * @param {(string|number)} y y coordinate of the td clicked
-   * @returns true is the player has moved, otherwise returns false
+   * @returns {boolean} true is the player has moved, otherwise returns false
    */
   movePlayer(currentPlayer, x, y) {
     const targetCell = this.getCell(x, y);
@@ -310,7 +312,7 @@ class Map {
   /**
    * 
    * @param {Object} currentPlayer 
-   * @returns true if a cell next to the currentPlayer has a player
+   * @returns {boolean} true if a cell next to the currentPlayer has a player
    */
   hasAdjacentPlayer(currentPlayer) {
     const cellsAroundPlayer = this.cells.filter((cell) => {

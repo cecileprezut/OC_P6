@@ -20,7 +20,7 @@ class Game {
 
   /**
    * This method sets the currentPlayer according to the currentIndex
-   * @param {requestCallback} cb Allows to call some other functions (mostly display-related ones) once the player is changed
+   * @param {requestCallback} cb Allows to call display-related functions once the player is changed
    */
   changePlayer(cb) {
     this.currentIndex++;

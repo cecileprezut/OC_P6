@@ -191,7 +191,7 @@ function displayFightActionsButtons(currentIndex, elements) {
 function displayShield(currentIndex, elements) {
   const shieldImg = document.createElement("IMG")
   shieldImg.setAttribute('src', 'assets/shield.png')
-  shieldImg.setAttribute('width', '20')
+  shieldImg.setAttribute('width', '50')
   shieldImg.setAttribute('alt', 'Shield')
   if (currentIndex === 0) {
     elements.player1ShieldElt.appendChild(shieldImg);

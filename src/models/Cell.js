@@ -41,6 +41,7 @@ class Cell {
   /**
    * 
    * @param {Object} player
+   * @returns {boolean} true if the player can move to the cell, otherwise returns false
    */
   playerCanMoveTo(player) {
     // If the currentPlayer is on the cell

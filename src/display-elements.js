@@ -1,5 +1,5 @@
 /**
- * Allows to load all the DOM elements before calling the display functions
+ * Retrieves all the DOM elements
  */
 function loadElements() {
   return {
